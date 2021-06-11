@@ -24,7 +24,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_username"
         app:layout_constraintBottom_toTopOf="@id/btn_login"
-        android:hint="Enter your password:"/>
+        android:hint="Enter your password:"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btn_login"
