@@ -22,18 +22,29 @@ class RegisterDialog : DialogFragment() {
     ): View? {
 
         binding = RegisterDialogBinding.inflate(layoutInflater).also {
+            val tv = it.tvRegistration
             it.btnRegisterUser.setOnClickListener {
-
+                tv.text = "asdasdas"
             }
         }
-        return inflater.inflate(R.layout.register_dialog, container, false)
+        return binding.root//inflater.inflate(R.layout.register_dialog, container, false)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = RegisterDialogBinding.inflate(layoutInflater)
-
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //binding = RegisterDialogBinding.inflate(layoutInflater)
     }
+
+    //    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+//        binding = RegisterDialogBinding.inflate(layoutInflater).also {
+//            val tv = it.tvRegistration
+//            it.btnRegisterUser.setOnClickListener {
+//                tv.setText("HELLO")
+//            }
+//        }
+//
+//        return AlertDialog.Builder(requireContext()).create()
+//    }
 
     override fun onStart() {
         super.onStart()

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "836991529911",
+    "project_id": "guessthecountry-a3e8c",
+    "storage_bucket": "guessthecountry-a3e8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836991529911:android:3416930aa6d4c021602e32",
+        "android_client_info": {
+          "package_name": "com.example.amilosevic.guessthecountry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836991529911-7gcr3c2uim865ooi1f6dsir3srk4199a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANswzWV8EZpMD4I6ZofcF_c75QEAcAJp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836991529911-7gcr3c2uim865ooi1f6dsir3srk4199a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
