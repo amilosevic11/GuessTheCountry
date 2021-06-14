@@ -10,8 +10,12 @@ class FirebaseService(private val auth: FirebaseAuth) {
 
     fun register(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            if(it.isSuccessful)
-                Log.e("TAG", "Successful")
+            if(it.isSuccessful) {
+                Log.d("LOGIN", "SUCCESSFUL")
+            }
+            else {
+                Log.d("LOGIN", "NOT Successful")
+            }
         }
     }
 
