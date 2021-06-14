@@ -1,19 +1,18 @@
 package com.example.amilosevic.guessthecountry
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.amilosevic.guessthecountry.databinding.RegisterDialogBinding
+import com.example.amilosevic.guessthecountry.viewmodel.RegistrationViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterDialog : DialogFragment() {
 
     private lateinit var binding: RegisterDialogBinding
+    private val viewModel by viewModel<RegistrationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,10 +21,13 @@ class RegisterDialog : DialogFragment() {
     ): View {
 
         binding = RegisterDialogBinding.inflate(layoutInflater).also {
-            val tv = it.tvRegistration
+            val email = it.etEmailRegister.text.toString()
+            val password = it.etPasswordRegister.text.toString()
+
             it.btnRegisterUser.setOnClickListener {
-                tv.text = "asdasdas"
+                viewModel.register(email, password)
             }
+
         }
         return binding.root
     }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -45,6 +46,7 @@ android {
 
 dependencies {
 
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
     def koin_version= "3.0.1"
     implementation "io.insert-koin:koin-android:$koin_version"
 
