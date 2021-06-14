@@ -7,7 +7,9 @@ import com.example.amilosevic.guessthecountry.data.firebase.FirebaseService
 import com.google.firebase.auth.FirebaseUser
 
 class RegistrationViewModel(val auth: FirebaseService): ViewModel() {
-    private var user = MutableLiveData<User>()
+
+    var currentUser = MutableLiveData<FirebaseUser>()
+    var isSignedIn = MutableLiveData<Boolean>()
 
     fun register(email: String, password: String) {
         auth.register(email, password)
@@ -15,10 +17,15 @@ class RegistrationViewModel(val auth: FirebaseService): ViewModel() {
 
     fun login(email: String, password: String) {
         auth.login(email, password)
+        currentUser.postValue(getCurrentUser()!!)
     }
 
     fun isSigned(): Boolean {
         return auth.isSigned()
+    }
+
+    fun isRegistered(): Boolean {
+        return auth.isRegistered()
     }
 
     fun getCurrentUser(): FirebaseUser? {

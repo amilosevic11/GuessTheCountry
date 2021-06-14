@@ -1,4 +1,4 @@
-package com.example.amilosevic.guessthecountry
+package com.example.amilosevic.guessthecountry.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,7 @@ class RegisterDialog : DialogFragment() {
 
     private lateinit var binding: RegisterDialogBinding
     private val viewModel by viewModel<RegistrationViewModel>()
+    private var isRegistered: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,11 +22,12 @@ class RegisterDialog : DialogFragment() {
     ): View {
 
         binding = RegisterDialogBinding.inflate(layoutInflater).also {
-            val email = it.etEmailRegister.text.toString()
-            val password = it.etPasswordRegister.text.toString()
+            val email = it.etEmailRegister
+            val password = it.etPasswordRegister
 
             it.btnRegisterUser.setOnClickListener {
-                viewModel.register(email, password)
+                viewModel.register(email.text.toString(), password.text.toString())
+                isRegistered = viewModel.isRegistered()
             }
 
         }

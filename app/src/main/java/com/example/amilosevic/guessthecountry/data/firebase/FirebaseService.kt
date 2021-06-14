@@ -6,11 +6,13 @@ import com.google.firebase.auth.FirebaseUser
 
 class FirebaseService(private val auth: FirebaseAuth) {
 
-    var isUserSigned: Boolean = false
+    private var isUserSigned: Boolean = false
+    private var isUserRegistered: Boolean = false
 
     fun register(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful) {
+                isUserRegistered = true
                 Log.d("LOGIN", "SUCCESSFUL")
             }
             else {
@@ -29,6 +31,10 @@ class FirebaseService(private val auth: FirebaseAuth) {
 
     fun isSigned(): Boolean {
         return isUserSigned
+    }
+
+    fun isRegistered(): Boolean {
+        return isUserRegistered
     }
 
     fun getCurrentUser(): FirebaseUser? {
