@@ -9,7 +9,7 @@ class FirebaseService(private val auth: FirebaseAuth) {
     private var isUserSigned: Boolean = false
     private var isUserRegistered: Boolean = false
 
-    suspend fun register(email: String, password: String) {
+    fun register(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful) {
                 isUserRegistered = true

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.amilosevic.guessthecountry.data.firebase.FirebaseService
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
@@ -24,6 +25,7 @@ class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
 
     fun login(email: String, password: String) {
         auth.login(email, password)
+
         if(auth.isSigned()) {
             currentUser.postValue(auth.getCurrentUser())
             isSignedIn.postValue(true)
