@@ -31,6 +31,11 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnPlay.setOnClickListener {
+            val intent = Intent(this, PlayQuizActivity::class.java)
+            startActivity(intent)
+        }
+
         setContentView(binding.root)
     }
 
