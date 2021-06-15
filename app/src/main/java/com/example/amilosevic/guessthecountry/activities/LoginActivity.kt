@@ -3,10 +3,10 @@ package com.example.amilosevic.guessthecountry.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.example.amilosevic.guessthecountry.dialog.RegisterDialog
 import com.example.amilosevic.guessthecountry.databinding.ActivityLoginBinding
-import com.example.amilosevic.guessthecountry.viewmodel.RegistrationViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -21,10 +21,17 @@ class LoginActivity : AppCompatActivity() {
             val etEmail = it.etEmail
             val etPassword = it.etPassword
 
+            viewModel.isSignedIn.observe(this, Observer {
+
+                if(it != false) {
+                    val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
+                    startActivity(intent)
+                }
+            })
+
             it.btnLogin.setOnClickListener {
-                viewModel.login(etEmail.toString(), etPassword.toString())
-                val intent = Intent(this, PlayOrSeeResults::class.java)
-                startActivity(intent)
+//                viewModel.login(etEmail.toString(), etPassword.toString())
+
             }
 
             it.btnRegister.setOnClickListener {

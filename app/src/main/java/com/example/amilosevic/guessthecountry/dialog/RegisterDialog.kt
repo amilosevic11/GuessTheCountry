@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.amilosevic.guessthecountry.databinding.RegisterDialogBinding
-import com.example.amilosevic.guessthecountry.viewmodel.RegistrationViewModel
+import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterDialog : DialogFragment() {
