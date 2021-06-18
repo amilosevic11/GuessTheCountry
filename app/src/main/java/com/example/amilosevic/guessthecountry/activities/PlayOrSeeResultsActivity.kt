@@ -15,9 +15,6 @@ import com.example.amilosevic.guessthecountry.databinding.ActivityPlayOrSeeResul
 import com.example.amilosevic.guessthecountry.dialog.LoadImageDialog
 import com.example.amilosevic.guessthecountry.viewmodels.PlayOrSeeResultsViewModel
 import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 
@@ -74,28 +71,9 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
         }
         else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-//    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-//        playOrSeeResultsViewModel.takenImage.observe(this, Observer {
-//            Log.v("jebiga", it.toString())
-//            binding.ivUserPhoto.setImageBitmap(it)
-//        })
-//        return super.onCreateView(name, context, attrs)
-//    }
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if(requestCode == 202 && resultCode == Activity.RESULT_OK) {
-//            data?.data?.let {
-//
-//            }
-//        }
-//        else {
-//            super.onActivityResult(requestCode, resultCode, data)
-//        }
-//    }
-
 }
