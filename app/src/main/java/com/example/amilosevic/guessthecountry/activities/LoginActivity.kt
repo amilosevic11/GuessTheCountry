@@ -25,18 +25,7 @@ class LoginActivity : AppCompatActivity() {
             val etEmail = it.etEmail
             val etPassword = it.etPassword
 
-//            viewModel.isSignedIn.observe(this, Observer {
-//
-//                if(it != false) {
-//                    val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            })
-
             it.btnLogin.setOnClickListener {
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    viewModel.login(etEmail.text.toString(), etPassword.text.toString())
-//                }
                 CoroutineScope(Dispatchers.Default).launch {
                     viewModel.login(etEmail.text.toString(), etPassword.text.toString())
                 }

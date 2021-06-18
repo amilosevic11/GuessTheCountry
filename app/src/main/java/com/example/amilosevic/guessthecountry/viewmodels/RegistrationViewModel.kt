@@ -27,7 +27,7 @@ class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
     suspend fun login(email: String, password: String) {
         auth.login(email, password)
 
-        if(auth.isSigned()) {
+        if(auth.getCurrentUser() != null) {
             currentUser.postValue(auth.getCurrentUser())
             isSignedIn.postValue(isSigned())
         }
