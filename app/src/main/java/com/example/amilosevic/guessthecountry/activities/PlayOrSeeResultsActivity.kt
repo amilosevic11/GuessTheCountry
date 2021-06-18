@@ -7,7 +7,7 @@ import com.example.amilosevic.guessthecountry.databinding.ActivityPlayOrSeeResul
 import com.example.amilosevic.guessthecountry.viewmodel.RegistrationViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PlayOrSeeResults : AppCompatActivity() {
+class PlayOrSeeResultsActivity : AppCompatActivity() {
     private val viewModel by viewModel<RegistrationViewModel>()
 
     private lateinit var binding: ActivityPlayOrSeeResultsBinding

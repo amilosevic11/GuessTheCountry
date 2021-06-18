@@ -6,7 +6,6 @@ import android.os.Bundle
 import com.example.amilosevic.guessthecountry.dialog.RegisterDialog
 import com.example.amilosevic.guessthecountry.databinding.ActivityLoginBinding
 import com.example.amilosevic.guessthecountry.viewmodel.RegistrationViewModel
-import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -22,8 +21,9 @@ class LoginActivity : AppCompatActivity() {
             val etPassword = it.etPassword
 
             it.btnLogin.setOnClickListener {
-                viewModel.login(etEmail.toString(), etPassword.toString())
-                val intent = Intent(this, PlayOrSeeResults::class.java)
+//                viewModel.login(etEmail.toString(), etPassword.toString())
+
+                val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
                 startActivity(intent)
             }
 

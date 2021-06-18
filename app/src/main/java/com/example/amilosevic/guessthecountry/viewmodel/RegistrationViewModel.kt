@@ -11,11 +11,11 @@ class RegistrationViewModel(val auth: FirebaseService): ViewModel() {
     var currentUser = MutableLiveData<FirebaseUser>()
     var isSignedIn = MutableLiveData<Boolean>()
 
-    fun register(email: String, password: String) {
+    suspend fun register(email: String, password: String) {
         auth.register(email, password)
     }
 
-    fun login(email: String, password: String) {
+    suspend fun login(email: String, password: String) {
         auth.login(email, password)
         currentUser.postValue(getCurrentUser()!!)
     }
