@@ -8,15 +8,9 @@ import com.example.amilosevic.guessthecountry.data.firebase.FirestoreDatabase
 class PlayOrSeeResultsViewModel(private val database: FirestoreDatabase) : ViewModel() {
 
     var isImageTaken = MutableLiveData<Boolean>()
-    var takenImage = MutableLiveData<Bitmap?>()
+    var takenImage = MutableLiveData<Bitmap>()
 
     fun sendImage(image: Bitmap) {
-        if(takenImage == null) {
-            takenImage.postValue(image)
-        }
-        else {
-            takenImage.value = null
-            takenImage.postValue(image)
-        }
+        takenImage.postValue(image)
     }
 }

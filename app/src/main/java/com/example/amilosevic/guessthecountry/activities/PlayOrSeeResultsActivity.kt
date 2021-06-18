@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -18,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.IOException
 
 class PlayOrSeeResultsActivity : AppCompatActivity() {
     private val viewModel by viewModel<RegistrationViewModel>()
@@ -62,8 +64,17 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
             playOrSeeResultsViewModel.sendImage(takenImage)
         }
         else if(requestCode == LoadImageDialog.GALLERY_CODE && resultCode == Activity.RESULT_OK) {
-            val selectedImage = data?.extras?.get("data") as Bitmap
-            playOrSeeResultsViewModel.sendImage(selectedImage)
+//            val selectedImage = data?.extras?.get("data") as Bitmap
+//            playOrSeeResultsViewModel.sendImage(selectedImage)
+            if(data == null || data.data == null) return
+
+            try {
+                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.data)
+                playOrSeeResultsViewModel.sendImage(bitmap)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
         }
         else {
             super.onActivityResult(requestCode, resultCode, data)
