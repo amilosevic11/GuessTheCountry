@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.amilosevic.guessthecountry.databinding.RegisterDialogBinding
 import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterDialog : DialogFragment() {
@@ -26,7 +29,10 @@ class RegisterDialog : DialogFragment() {
             val password = it.etPasswordRegister
 
             it.btnRegisterUser.setOnClickListener {
-                viewModel.register(email.text.toString(), password.text.toString())
+//                viewModel.register(email.text.toString(), password.text.toString())
+                CoroutineScope(Dispatchers.IO).launch {
+                    viewModel.register(email.text.toString(), password.text.toString())
+                }
                 isRegistered = viewModel.isRegistered()
             }
 

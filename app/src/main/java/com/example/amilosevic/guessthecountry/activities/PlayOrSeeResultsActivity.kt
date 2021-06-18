@@ -21,9 +21,9 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityPlayOrSeeResultsBinding.inflate(layoutInflater)
-        //binding.tvUsername.text = "Hello " + viewModel.getCurrentUser().email
+        binding.tvUsername.text = "Hello " + (viewModel.getCurrentUser()?.uid ?: "nischta")
 
-        viewModel.currentUser.observe(this, Observer { binding.tvUsername.text = "Hello " + it.uid })
+        //viewModel.currentUser.observe(this, Observer { binding.tvUsername.text = "Hello " + it.uid })
 
         binding.btnSignOut.setOnClickListener {
             viewModel.signOut()

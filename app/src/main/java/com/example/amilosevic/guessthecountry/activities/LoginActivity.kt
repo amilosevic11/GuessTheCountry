@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import com.example.amilosevic.guessthecountry.dialog.RegisterDialog
 import com.example.amilosevic.guessthecountry.databinding.ActivityLoginBinding
 import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import org.koin.androidx.scope.activityScope
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.scope.scope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,8 +34,12 @@ class LoginActivity : AppCompatActivity() {
 //            })
 
             it.btnLogin.setOnClickListener {
-                viewModel.login(etEmail.toString(), etPassword.toString())
-
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    viewModel.login(etEmail.text.toString(), etPassword.text.toString())
+//                }
+                CoroutineScope(Dispatchers.Default).launch {
+                    viewModel.login(etEmail.text.toString(), etPassword.text.toString())
+                }
                 val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
                 startActivity(intent)
             }
@@ -45,5 +49,14 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         setContentView(binding.root)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(viewModel.isSigned()) {
+            val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
