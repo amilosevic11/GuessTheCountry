@@ -12,6 +12,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.amilosevic.guessthecountry.databinding.ActivityPlayOrSeeResultsBinding
 import com.example.amilosevic.guessthecountry.dialog.LoadImageDialog
 import com.example.amilosevic.guessthecountry.viewmodels.PlayOrSeeResultsViewModel
@@ -19,6 +20,7 @@ import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 
@@ -35,6 +37,20 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvUsername.text = "Hello " + (viewModel.getCurrentUser()?.email ?: "null")
+
+        CoroutineScope(Dispatchers.Default).launch {
+            playOrSeeResultsViewModel.downloadPhoto()
+        }
+
+        playOrSeeResultsViewModel.imageUri.observe(this, Observer {
+            Glide.with(this)
+                .load(it)
+                .into(binding.ivUserPhoto)
+        })
+
+//        Glide.with(this@PlayOrSeeResultsActivity)
+//            .load(playOrSeeResultsViewModel.downloadPhoto())
+//            .into(binding.ivUserPhoto)
 
         binding.btnSignOut.setOnClickListener {
             viewModel.signOut()

@@ -13,8 +13,8 @@ import java.io.ByteArrayOutputStream
 
 class PlayOrSeeResultsViewModel(private val storage: CloudStorage) : ViewModel() {
 
-    var isImageTaken = MutableLiveData<Boolean>()
     var takenImage = MutableLiveData<Bitmap>()
+    var imageUri = MutableLiveData<Uri>()
 
     fun sendImage(image: Bitmap) {
         takenImage.postValue(image)
@@ -25,9 +25,13 @@ class PlayOrSeeResultsViewModel(private val storage: CloudStorage) : ViewModel()
     }
 
     fun getImageUri(context: Context, image: Bitmap): Uri {
-        var baos: ByteArrayOutputStream = ByteArrayOutputStream()
+        val baos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
         return Uri.parse(MediaStore.Images.Media.insertImage(context.contentResolver, image, "Title", null))
+    }
+
+    suspend fun downloadPhoto() {
+         imageUri.postValue(storage.downloadPhoto())
     }
 }
