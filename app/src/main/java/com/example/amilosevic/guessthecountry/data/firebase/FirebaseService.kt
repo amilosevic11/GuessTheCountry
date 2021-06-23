@@ -1,13 +1,14 @@
 package com.example.amilosevic.guessthecountry.data.firebase
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
 class FirebaseService(private val auth: FirebaseAuth) {
 
-    private var isUserSigned: Boolean = false
+    var isUserSigned: MutableLiveData<Boolean> = MutableLiveData(false)
     private var isUserRegistered: Boolean = false
 
 
@@ -28,6 +29,7 @@ class FirebaseService(private val auth: FirebaseAuth) {
     suspend fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful) {
+                isUserSigned.postValue(true)
                 Log.e("Login success --->", it.toString())
             }
         }.addOnFailureListener {
@@ -37,6 +39,7 @@ class FirebaseService(private val auth: FirebaseAuth) {
 
     fun signOut() {
         auth.signOut()
+        Log.e("SignOut", "SUCCESS")
     }
 
     fun isSigned(): Boolean {

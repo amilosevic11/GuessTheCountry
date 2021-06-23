@@ -9,6 +9,7 @@ import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -19,5 +20,7 @@ val appModule = module {
 
 val viewModelModule = module {
     viewModel { RegistrationViewModel(FirebaseService(FirebaseAuth.getInstance())) }
-    viewModel { PlayOrSeeResultsViewModel(FirestoreDatabase(FirebaseFirestore.getInstance()))}
+//    viewModel { PlayOrSeeResultsViewModel(FirestoreDatabase(FirebaseFirestore.getInstance()))}
+    viewModel { PlayOrSeeResultsViewModel(CloudStorage(FirebaseStorage.getInstance()))}
+
 }

@@ -29,8 +29,8 @@ class LoginActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.Default).launch {
                     viewModel.login(etEmail.text.toString(), etPassword.text.toString())
                 }
-                val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
+//                startActivity(intent)
             }
 
             it.btnRegister.setOnClickListener {
@@ -38,6 +38,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         setContentView(binding.root)
+        viewModel.isSignedIn.observe(this, Observer {
+            if (it) {
+                val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun onStart() {

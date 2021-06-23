@@ -23,8 +23,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LoadImageDialog : DialogFragment()  {
 
     private lateinit var binding: LoadImageDialogBinding
-    private val registrationViewModel by viewModel<RegistrationViewModel>()
-    private val playOrSeeResultsViewModel by viewModel<PlayOrSeeResultsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

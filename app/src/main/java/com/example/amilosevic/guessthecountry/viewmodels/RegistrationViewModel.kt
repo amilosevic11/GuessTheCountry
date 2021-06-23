@@ -1,5 +1,6 @@
 package com.example.amilosevic.guessthecountry.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,7 +28,7 @@ class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
     suspend fun login(email: String, password: String) {
         auth.login(email, password)
 
-        if(auth.getCurrentUser() != null) {
+        if(auth.isSigned()) {
             currentUser.postValue(auth.getCurrentUser())
             isSignedIn.postValue(isSigned())
         }

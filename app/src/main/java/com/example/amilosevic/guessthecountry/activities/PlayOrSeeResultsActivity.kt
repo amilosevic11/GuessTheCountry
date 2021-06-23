@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,6 +16,9 @@ import com.example.amilosevic.guessthecountry.databinding.ActivityPlayOrSeeResul
 import com.example.amilosevic.guessthecountry.dialog.LoadImageDialog
 import com.example.amilosevic.guessthecountry.viewmodels.PlayOrSeeResultsViewModel
 import com.example.amilosevic.guessthecountry.viewmodels.RegistrationViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 
@@ -31,7 +35,6 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.tvUsername.text = "Hello " + (viewModel.getCurrentUser()?.email ?: "null")
-        //viewModel.currentUser.observe(this, Observer { binding.tvUsername.text = "Hello " + it.uid })
 
         binding.btnSignOut.setOnClickListener {
             viewModel.signOut()
@@ -52,21 +55,30 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
             if (it != null ) {
                 binding.ivUserPhoto.setImageBitmap(it)
             }
+            else {
+                Log.e("Login not successful", "testtest")
+            }
         })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == LoadImageDialog.CAMERA_CODE && resultCode == Activity.RESULT_OK) {
             val takenImage = data?.extras?.get("data") as Bitmap
+            val imageUri : Uri = playOrSeeResultsViewModel.getImageUri(context = this, takenImage)
+            CoroutineScope(Dispatchers.Default).launch {
+                playOrSeeResultsViewModel.uploadImage(imageUri)
+            }
             playOrSeeResultsViewModel.sendImage(takenImage)
         }
         else if(requestCode == LoadImageDialog.GALLERY_CODE && resultCode == Activity.RESULT_OK) {
-//            val selectedImage = data?.extras?.get("data") as Bitmap
-//            playOrSeeResultsViewModel.sendImage(selectedImage)
             if(data == null || data.data == null) return
 
             try {
                 val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.data)
+                val imageUri: Uri = playOrSeeResultsViewModel.getImageUri(context = this, bitmap)
+                CoroutineScope(Dispatchers.Default).launch {
+                    playOrSeeResultsViewModel.uploadImage(imageUri)
+                }
                 playOrSeeResultsViewModel.sendImage(bitmap)
             } catch (e: IOException) {
                 e.printStackTrace()
