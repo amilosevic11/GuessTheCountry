@@ -6,17 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.PlayQuizActivity">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_flag"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="150dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/btn_first_answer"-->
-<!--        android:src="@drawable/ic_col"/>-->
-
-    <com.caverock.androidsvg.SVGImageView
+    <ImageView
         android:id="@+id/iv_flag"
         android:layout_width="200dp"
         android:layout_height="150dp"
@@ -24,6 +14,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_first_answer"/>
+
+<!--    <com.caverock.androidsvg.SVGImageView-->
+<!--        android:id="@+id/iv_flag"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="150dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/btn_first_answer"/>-->
 
     <Button
         android:id="@+id/btn_first_answer"
