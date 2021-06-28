@@ -89,4 +89,7 @@ dependencies {
 
     //OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+
+    //SVG
+    implementation 'com.caverock:androidsvg-aar:1.4'
 }
