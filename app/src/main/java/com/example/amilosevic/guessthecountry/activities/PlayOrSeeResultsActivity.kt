@@ -59,6 +59,11 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnSeeResults.setOnClickListener {
+            val intent = Intent(this, SeeResultsActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.ivUserPhoto.setOnClickListener {
             LoadImageDialog().show(supportFragmentManager, "Load image dialog")
         }
