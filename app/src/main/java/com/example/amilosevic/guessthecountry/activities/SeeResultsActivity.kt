@@ -3,7 +3,7 @@ package com.example.amilosevic.guessthecountry.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.amilosevic.guessthecountry.ResultsRecyclerAdapter
+import com.example.amilosevic.guessthecountry.recyclerview.ResultsRecyclerAdapter
 import com.example.amilosevic.guessthecountry.databinding.ActivitySeeResultsBinding
 
 class SeeResultsActivity : AppCompatActivity() {

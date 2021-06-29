@@ -1,10 +1,11 @@
-package com.example.amilosevic.guessthecountry
+package com.example.amilosevic.guessthecountry.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.amilosevic.guessthecountry.R
 import com.example.amilosevic.guessthecountry.model.User
 import kotlinx.android.synthetic.main.see_results_rv_item.view.*
 
