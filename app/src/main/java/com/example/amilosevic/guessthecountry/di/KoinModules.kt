@@ -1,7 +1,7 @@
 package com.example.amilosevic.guessthecountry.di
 
 import com.example.amilosevic.guessthecountry.data.firebase.CloudStorage
-import com.example.amilosevic.guessthecountry.data.repos.UserRepository
+import com.example.amilosevic.guessthecountry.model.User
 import com.example.amilosevic.guessthecountry.data.firebase.FirebaseService
 import com.example.amilosevic.guessthecountry.data.repos.GuessTheCountryRepository
 import com.example.amilosevic.guessthecountry.viewmodels.PlayOrSeeResultsViewModel
@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    factory { UserRepository() }
+    factory { User() }
 }
 
 val viewModelModule = module {
