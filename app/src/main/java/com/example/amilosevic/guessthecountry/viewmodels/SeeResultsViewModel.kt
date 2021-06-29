@@ -5,5 +5,5 @@ import com.example.amilosevic.guessthecountry.model.User
 
 class SeeResultsViewModel(private val user: User) : ViewModel() {
 
-    
+
 }
