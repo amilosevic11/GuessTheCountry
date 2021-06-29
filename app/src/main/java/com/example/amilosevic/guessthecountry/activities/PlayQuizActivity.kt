@@ -5,9 +5,7 @@ import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.amilosevic.guessthecountry.databinding.ActivityPlayQuizBinding
 import com.example.amilosevic.guessthecountry.viewmodels.PlayQuizViewModel
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.random.Random
 
 class PlayQuizActivity : AppCompatActivity() {
 

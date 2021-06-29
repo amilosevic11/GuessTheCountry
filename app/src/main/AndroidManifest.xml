@@ -14,11 +14,13 @@
         android:roundIcon="@drawable/guessthecountrylogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.GuessTheCountry">
-        <activity android:name=".activities.PlayQuizActivity"></activity>
+        <activity android:name=".activities.SeeResultsActivity"></activity>
+        <activity android:name=".activities.PlayQuizActivity" />
         <activity android:name=".activities.PlayOrSeeResultsActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

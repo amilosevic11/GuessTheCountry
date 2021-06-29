@@ -32,19 +32,10 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
             val response = repository.getAllCountries()
             myResponse.postValue(response)
             countriesInfo = response
-//            currentImageNumber = Random.nextInt(countriesInfo!!.size)
-//            currentImage.postValue(COUNTRY_FLAGS_URL + countriesInfo?.get(currentImageNumber)?.alpha2Code + FLAT_64)
-//            currentImageName = countriesInfo!![currentImageNumber].name
 
             setRandomCountries()
         }
     }
-
-//    fun setRandomCountryFlag() {
-//        currentImageNumber = Random.nextInt(countriesInfo!!.size)
-//        checkIfNumberExist(currentImageNumber)
-//        currentImage.postValue(COUNTRY_FLAGS_URL + countriesInfo?.get(currentImageNumber)?.alpha2Code + FLAT_64)
-//    }
 
     fun setRandomCountries() {
         var rndNum = Random.nextInt(countriesInfo!!.size)
