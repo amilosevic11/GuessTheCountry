@@ -1,5 +1,5 @@
 package com.example.amilosevic.guessthecountry.model
 
-data class User(val name: String? = null, val email: String? = null, val password: String? = null) {
+import java.util.*
 
-}
+data class User(val username: String? = null, val imageURL: String? = null, val score: Int? = null, val date: Date? = null)
