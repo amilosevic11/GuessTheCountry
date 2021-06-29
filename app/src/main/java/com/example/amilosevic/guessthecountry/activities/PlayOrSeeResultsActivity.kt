@@ -42,15 +42,11 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
             playOrSeeResultsViewModel.downloadPhoto()
         }
 
-        playOrSeeResultsViewModel.imageUri.observe(this, Observer {
+        playOrSeeResultsViewModel.imageUri.observe(this, {
             Glide.with(this)
                 .load(it)
                 .into(binding.ivUserPhoto)
         })
-
-//        Glide.with(this@PlayOrSeeResultsActivity)
-//            .load(playOrSeeResultsViewModel.downloadPhoto())
-//            .into(binding.ivUserPhoto)
 
         binding.btnSignOut.setOnClickListener {
             viewModel.signOut()
