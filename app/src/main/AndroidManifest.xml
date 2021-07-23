@@ -14,10 +14,10 @@
         android:roundIcon="@drawable/guessthecountrylogo"
         android:supportsRtl="true"
         android:theme="@style/Theme.GuessTheCountry">
-        <activity android:name=".activities.SeeResultsActivity"></activity>
-        <activity android:name=".activities.PlayQuizActivity" />
-        <activity android:name=".activities.PlayOrSeeResultsActivity" />
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.SeeResultsActivity"></activity>
+        <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.PlayQuizActivity" />
+        <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.PlayOrSeeResultsActivity" />
+        <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

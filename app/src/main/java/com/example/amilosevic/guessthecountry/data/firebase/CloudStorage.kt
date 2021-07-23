@@ -2,12 +2,11 @@ package com.example.amilosevic.guessthecountry.data.firebase
 
 import android.net.Uri
 import android.util.Log
+import com.example.amilosevic.guessthecountry.utils.Constants.Companion.IMAGE_PATH
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
-
-const val IMAGE_PATH = "guessthecountry-a3e8c.appspot.com/"
 
 class CloudStorage(storageReference: FirebaseStorage) {
 
@@ -18,28 +17,40 @@ class CloudStorage(storageReference: FirebaseStorage) {
     var username: String? = index?.let { auth.currentUser?.email?.substring(0, it) }
     var imagesRef: StorageReference? = storageRef.child(username + ".jpg")
     lateinit var downloadUri: Uri
+    lateinit var list: MutableList<StorageReference>
 
     suspend fun uploadImage(imageUri: Uri) {
-        imagesRef?.putFile(imageUri)?.addOnSuccessListener {
-            Log.e("UPLOADING", "DONE")
-        }?.await()
+        try {
+            imagesRef?.putFile(imageUri)?.addOnSuccessListener {
+                Log.e("UPLOADING", "DONE")
+            }?.await()
+        } catch (e: Exception) {
+            Log.e("Downloading photo", e.toString())
+        }
     }
 
-    suspend fun downloadPhoto(): Uri {
+    suspend fun downloadPhoto(): Uri? {
 
-//        val ONE_MB: Long = 1024 * 1024
-//        imagesRef?.getBytes(ONE_MB)?.addOnSuccessListener {
-//            Log.e("Image download", "Success")
-//        }?.await()
-        Log.v("jbgPath", IMAGE_PATH + username + ".jpg")
-        storageRef.child(username + ".jpg").downloadUrl.addOnSuccessListener {
-            Log.e("DownloadSuccess", "SUCCESS")
-            downloadUri = it
-        }.addOnFailureListener {
-            Log.e("DownloadError", it.toString())
-        }.await()
+        try {
+            storageRef.listAll().addOnSuccessListener {
+                list = it.items
+            }.await()
+            for(item in list) {
+                if(item.path.contains(username.toString())) {
+                    Log.v("jbgPath", IMAGE_PATH + username + ".jpg")
+                    storageRef.child(username + ".jpg").downloadUrl.addOnSuccessListener {
+                        Log.e("DownloadSuccess", "SUCCESS")
+                        downloadUri = it
+                    }.addOnFailureListener {
+                        Log.e("DownloadError", it.toString())
+                    }.await()
+                }
+                return downloadUri
+            }
+        } catch (e: Exception) {
+            Log.e("Downloading photo", e.toString())
+        }
 
-
-        return downloadUri
+        return null
     }
 }
