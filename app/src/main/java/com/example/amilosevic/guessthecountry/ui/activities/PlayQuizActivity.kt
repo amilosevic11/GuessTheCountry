@@ -1,5 +1,6 @@
 package com.example.amilosevic.guessthecountry.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -68,6 +69,11 @@ class PlayQuizActivity : AppCompatActivity() {
             binding.btnSecondAnswer.text = playQuizViewModel.countriesInfo!![playQuizViewModel.currentSecondCountry].name
             binding.btnThirdAnswer.text = playQuizViewModel.countriesInfo!![playQuizViewModel.currentThirdCountry].name
             binding.btnFourthAnswer.text = playQuizViewModel.countriesInfo!![playQuizViewModel.currentImageNumber].name
+        })
+
+        playQuizViewModel.allQuestionsAnswered.observe(this, {
+            val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
+            startActivity(intent)
         })
     }
 }

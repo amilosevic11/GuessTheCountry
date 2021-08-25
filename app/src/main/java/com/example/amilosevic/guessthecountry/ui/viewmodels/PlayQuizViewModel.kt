@@ -16,6 +16,7 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
     var countriesInfo : ArrayList<CountriesInfo>? = null
     val currentImage : MutableLiveData<String> = MutableLiveData()
     var isAnswerCorrect : MutableLiveData<Boolean> = MutableLiveData()
+    var allQuestionsAnswered : MutableLiveData<Boolean> = MutableLiveData()
     var currentQuestionFlag : MutableLiveData<Int> = MutableLiveData()
     var currentQuestion: Int = 0
 
@@ -76,6 +77,9 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
             isAnswerCorrect.postValue(true)
             currentQuestion++
             currentQuestionFlag.postValue(currentQuestion)
+        }
+        else if(currentQuestion == 4) {
+            allQuestionsAnswered.postValue(true);
         }
         else {
             isAnswerCorrect.postValue(false)
