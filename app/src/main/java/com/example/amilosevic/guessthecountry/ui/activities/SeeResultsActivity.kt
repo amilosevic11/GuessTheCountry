@@ -7,6 +7,9 @@ import com.example.amilosevic.guessthecountry.ui.recyclerview.ResultsRecyclerAda
 import com.example.amilosevic.guessthecountry.databinding.ActivitySeeResultsBinding
 import com.example.amilosevic.guessthecountry.model.ResultDetails
 import com.example.amilosevic.guessthecountry.ui.viewmodels.SeeResultsViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SeeResultsActivity : AppCompatActivity(), ResultsRecyclerAdapter.OnItemClickListener {
@@ -19,6 +22,14 @@ class SeeResultsActivity : AppCompatActivity(), ResultsRecyclerAdapter.OnItemCli
         super.onCreate(savedInstanceState)
         binding = ActivitySeeResultsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        CoroutineScope(Dispatchers.Default).launch {
+//            seeResultsViewModel.addToDatabase()
+//        }
+        CoroutineScope(Dispatchers.Default).launch {
+            seeResultsViewModel.getDataFromDatabase()
+        }
+
         initRecyclerView()
     }
 
