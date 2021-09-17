@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.amilosevic.guessthecountry.databinding.ActivityPlayQuizBinding
 import com.example.amilosevic.guessthecountry.ui.viewmodels.PlayQuizViewModel
+import com.example.amilosevic.guessthecountry.utils.Constants
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayQuizActivity : AppCompatActivity() {
@@ -23,57 +24,55 @@ class PlayQuizActivity : AppCompatActivity() {
             it.btnFirstAnswer.setOnClickListener {
                 playQuizViewModel.isCorrect(firstButton.text.toString())
                 binding.progressBarHorizontal.progress++
-                playQuizViewModel.setRandomCountries()
             }
 
             val secondButton = it.btnSecondAnswer
             it.btnSecondAnswer.setOnClickListener {
                 playQuizViewModel.isCorrect(secondButton.text.toString())
                 binding.progressBarHorizontal.progress++
-                playQuizViewModel.setRandomCountries()
             }
 
             val thirdButton = it.btnThirdAnswer
             it.btnThirdAnswer.setOnClickListener {
                 playQuizViewModel.isCorrect(thirdButton.text.toString())
                 binding.progressBarHorizontal.progress++
-                playQuizViewModel.setRandomCountries()
             }
 
             val fourthButton = it.btnFourthAnswer
             it.btnFourthAnswer.setOnClickListener {
                 playQuizViewModel.isCorrect(fourthButton.text.toString())
                 binding.progressBarHorizontal.progress++
-                playQuizViewModel.setRandomCountries()
             }
         }
-        setContentView(binding.root)
 
         playQuizViewModel.getAllCountries()
 
-        playQuizViewModel.myResponse.observe(this, {
-            binding.btnFirstAnswer.text = it[playQuizViewModel.currentFirstCountry].name
-            binding.btnSecondAnswer.text = it[playQuizViewModel.currentSecondCountry].name
-            binding.btnThirdAnswer.text = it[playQuizViewModel.currentThirdCountry].name
-            binding.btnFourthAnswer.text = it[playQuizViewModel.currentImageNumber].name
-        })
+        playQuizViewModel.didFetchCountries.observe(this, {
+            binding.btnFirstAnswer.text = playQuizViewModel.getRandomCountryName()
+            binding.btnSecondAnswer.text = playQuizViewModel.getRandomCountryName()
+            binding.btnThirdAnswer.text = playQuizViewModel.getRandomCountryName()
+            binding.btnFourthAnswer.text = playQuizViewModel.getRandomCountryName()
 
-        playQuizViewModel.currentImage.observe(this, {
             Glide.with(this)
-                .load(it)
+                .load(Constants.COUNTRY_FLAGS_URL + playQuizViewModel.getRandomCountryImage() + Constants.FLAT_64)
                 .into(binding.ivFlag)
         })
 
         playQuizViewModel.currentQuestionFlag.observe(this, {
-            binding.btnFirstAnswer.text = playQuizViewModel.countriesInfo!![playQuizViewModel.currentFirstCountry].name
-            binding.btnSecondAnswer.text = playQuizViewModel.countriesInfo!![playQuizViewModel.currentSecondCountry].name
-            binding.btnThirdAnswer.text = playQuizViewModel.countriesInfo!![playQuizViewModel.currentThirdCountry].name
-            binding.btnFourthAnswer.text = playQuizViewModel.countriesInfo!![playQuizViewModel.currentImageNumber].name
+            binding.btnFirstAnswer.text = playQuizViewModel.getRandomCountryName()
+            binding.btnSecondAnswer.text = playQuizViewModel.getRandomCountryName()
+            binding.btnThirdAnswer.text = playQuizViewModel.getRandomCountryName()
+            binding.btnFourthAnswer.text = playQuizViewModel.getRandomCountryName()
+
+            Glide.with(this)
+                .load(Constants.COUNTRY_FLAGS_URL + playQuizViewModel.getRandomCountryImage() + Constants.FLAT_64)
+                .into(binding.ivFlag)
         })
 
         playQuizViewModel.allQuestionsAnswered.observe(this, {
-            val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
-            startActivity(intent)
+            finish()
         })
+
+        setContentView(binding.root)
     }
 }

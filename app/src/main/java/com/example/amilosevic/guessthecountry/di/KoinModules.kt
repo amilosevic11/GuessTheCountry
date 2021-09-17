@@ -18,7 +18,6 @@ val appModule = module {
 
 val viewModelModule = module {
     viewModel { RegistrationViewModel(FirebaseService(FirebaseAuth.getInstance())) }
-//    viewModel { PlayOrSeeResultsViewModel(FirestoreDatabase(FirebaseFirestore.getInstance()))}
     viewModel { PlayOrSeeResultsViewModel(CloudStorage(FirebaseStorage.getInstance())) }
     viewModel { PlayQuizViewModel(GuessTheCountryRepository()) }
 }

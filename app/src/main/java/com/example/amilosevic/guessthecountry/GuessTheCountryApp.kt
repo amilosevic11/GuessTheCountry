@@ -1,6 +1,5 @@
 package com.example.amilosevic.guessthecountry
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import com.example.amilosevic.guessthecountry.di.appModule

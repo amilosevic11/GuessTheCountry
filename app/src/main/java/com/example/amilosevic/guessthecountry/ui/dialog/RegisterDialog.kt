@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import com.example.amilosevic.guessthecountry.databinding.RegisterDialogBinding
 import com.example.amilosevic.guessthecountry.ui.viewmodels.RegistrationViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +17,6 @@ class RegisterDialog : DialogFragment() {
 
     private lateinit var binding: RegisterDialogBinding
     private val viewModel by viewModel<RegistrationViewModel>()
-    private var isRegistered: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,18 +24,20 @@ class RegisterDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = RegisterDialogBinding.inflate(layoutInflater).also {
+        binding = RegisterDialogBinding.inflate(layoutInflater).also { it ->
             val email = it.etEmailRegister
             val password = it.etPasswordRegister
 
             it.btnRegisterUser.setOnClickListener {
-//                viewModel.register(email.text.toString(), password.text.toString())
                 CoroutineScope(Dispatchers.IO).launch {
                     viewModel.register(email.text.toString(), password.text.toString())
                 }
-                isRegistered = viewModel.isRegistered()
             }
 
+            viewModel.isRegistered.observe(this, {
+                if(it)
+                    dismiss()
+            })
         }
         return binding.root
     }

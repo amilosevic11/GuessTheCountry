@@ -15,8 +15,6 @@ class SeeResultsActivity : AppCompatActivity(), ResultsRecyclerAdapter.OnItemCli
     private lateinit var seeResultsRecyclerAdapter: ResultsRecyclerAdapter
     private val seeResultsViewModel by viewModel<SeeResultsViewModel>()
 
-    private lateinit var resultDetails: MutableList<ResultDetails>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeeResultsBinding.inflate(layoutInflater)
@@ -27,14 +25,13 @@ class SeeResultsActivity : AppCompatActivity(), ResultsRecyclerAdapter.OnItemCli
     private fun initRecyclerView() {
         binding.rvSeeResults.apply {
             layoutManager = LinearLayoutManager(this@SeeResultsActivity)
-            seeResultsRecyclerAdapter = ResultsRecyclerAdapter(resultDetails, this@SeeResultsActivity)
+            seeResultsRecyclerAdapter = ResultsRecyclerAdapter(this@SeeResultsActivity)
             adapter = seeResultsRecyclerAdapter
         }
     }
 
     override fun onItemClick(position: Int) {
-        val selectedResult = seeResultsRecyclerAdapter.getResultAt(position)
-        seeResultsViewModel.setSelectedResult(selectedResult)
+
     }
 
 }

@@ -1,98 +1,75 @@
 package com.example.amilosevic.guessthecountry.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.amilosevic.guessthecountry.data.repos.CountriesInfo
 import com.example.amilosevic.guessthecountry.data.repos.GuessTheCountryRepository
-import com.example.amilosevic.guessthecountry.utils.Constants.Companion.COUNTRY_FLAGS_URL
-import com.example.amilosevic.guessthecountry.utils.Constants.Companion.FLAT_64
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : ViewModel() {
 
-    val myResponse : MutableLiveData<ArrayList<CountriesInfo>> = MutableLiveData()
-    var countriesInfo : ArrayList<CountriesInfo>? = null
-    val currentImage : MutableLiveData<String> = MutableLiveData()
-    var isAnswerCorrect : MutableLiveData<Boolean> = MutableLiveData()
+    var didFetchCountries : MutableLiveData<Boolean> = MutableLiveData()
+    private lateinit var countriesInfo : ArrayList<CountriesInfo>
+    private var correctAnswers: Int = 0
     var allQuestionsAnswered : MutableLiveData<Boolean> = MutableLiveData()
     var currentQuestionFlag : MutableLiveData<Int> = MutableLiveData()
     var currentQuestion: Int = 0
 
     var currentImageName: String = ""
-    var currentImageNumber: Int = 0
-    var currentFirstCountry: Int = 0
-    var currentSecondCountry: Int = 0
-    var currentThirdCountry: Int = 0
-    var previousCountryNumbers: ArrayList<Int>? = null
-
+    var selectedCountries: ArrayList<CountriesInfo> = ArrayList()
+    var selectedCountryImage: String = ""
 
     fun getAllCountries() {
         viewModelScope.launch {
-            val response = repository.getAllCountries()
-            myResponse.postValue(response)
-            countriesInfo = response
-
-            setRandomCountries()
+            countriesInfo = repository.getAllCountries()
+            didFetchCountries.postValue(true)
         }
     }
 
-    fun setRandomCountries() {
-        var rndNum = Random.nextInt(countriesInfo!!.size)
+    fun getRandomCountryName() : String {
+        if(selectedCountries.size == 3)
+            selectedCountries.clear()
 
-        while(previousCountryNumbers?.contains(rndNum) == true) {
-            rndNum = Random.nextInt(countriesInfo!!.size)
-        }
-        previousCountryNumbers?.add(rndNum)
-        currentFirstCountry = rndNum
+        val randomNumber = Random.nextInt(countriesInfo.size)
+        val randomCountry = countriesInfo[randomNumber]
 
-        rndNum = Random.nextInt(countriesInfo!!.size)
-        while(previousCountryNumbers?.contains(rndNum) == true) {
-            rndNum = Random.nextInt(countriesInfo!!.size)
-        }
-        previousCountryNumbers?.add(rndNum)
-        currentSecondCountry = rndNum
+        countriesInfo.removeAt(randomNumber)
 
-        rndNum = Random.nextInt(countriesInfo!!.size)
-        while(previousCountryNumbers?.contains(rndNum) == true) {
-            rndNum = Random.nextInt(countriesInfo!!.size)
-        }
-        previousCountryNumbers?.add(rndNum)
-        currentThirdCountry = rndNum
+        selectedCountries.add(randomCountry)
 
-        rndNum = Random.nextInt(countriesInfo!!.size)
-        while(previousCountryNumbers?.contains(rndNum) == true) {
-            rndNum = Random.nextInt(countriesInfo!!.size)
-        }
-        previousCountryNumbers?.add(rndNum)
-        currentImageNumber = rndNum
-        currentImage.postValue(COUNTRY_FLAGS_URL + countriesInfo?.get(currentImageNumber)?.alpha2Code + FLAT_64)
+        return randomCountry.name
+    }
 
-        currentImageName = countriesInfo!![currentImageNumber].name
+    fun getRandomCountryImage(): String {
+        val rnd = Random.nextInt(selectedCountries.size)
+        selectedCountryImage = selectedCountries[rnd].name
+        currentImageName = selectedCountries[rnd].alpha2Code
+
+        return currentImageName
     }
 
     fun isCorrect(answer: String) {
-        if(answer == currentImageName) {
-            isAnswerCorrect.postValue(true)
-            currentQuestion++
-            currentQuestionFlag.postValue(currentQuestion)
-        }
-        else if(currentQuestion == 4) {
+
+        if(currentQuestion == 4) {
             allQuestionsAnswered.postValue(true);
         }
-        else {
-            isAnswerCorrect.postValue(false)
+        else if(answer == selectedCountryImage) {
+            correctAnswers++
+
             currentQuestion++
             currentQuestionFlag.postValue(currentQuestion)
         }
-    }
+        else {
+            currentQuestion++
+            currentQuestionFlag.postValue(currentQuestion)
+        }
 
-//    private fun checkIfNumberExist(number: Int) {
-//        while(previousCountryNumbers?.contains(number) == true) {
-//            currentImageNumber = Random.nextInt(countriesInfo!!.size)
-//        }
-//        previousCountryNumbers?.add(currentImageNumber)
-//    }
+        Log.d("currentImageName", selectedCountryImage)
+        Log.d("clickedAnswer", answer)
+        Log.d("isAnswerCorrect", correctAnswers.toString())
+    }
 
 }

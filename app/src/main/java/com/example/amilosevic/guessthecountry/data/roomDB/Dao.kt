@@ -6,6 +6,7 @@ import com.example.amilosevic.guessthecountry.model.ResultDetails
 
 @Dao
 interface Dao {
+    //add getId
     @Query("SELECT * FROM resultDetails")
     fun getUser(): ResultDetails
 

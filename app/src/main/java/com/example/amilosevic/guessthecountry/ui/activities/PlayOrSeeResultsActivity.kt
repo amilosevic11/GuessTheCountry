@@ -20,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.IOException
 
 class PlayOrSeeResultsActivity : AppCompatActivity() {
+
     private val viewModel by viewModel<RegistrationViewModel>()
     private val playOrSeeResultsViewModel by viewModel<PlayOrSeeResultsViewModel>()
 

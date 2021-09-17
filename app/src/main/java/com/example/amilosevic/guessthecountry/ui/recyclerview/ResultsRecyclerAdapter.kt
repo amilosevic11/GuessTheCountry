@@ -9,7 +9,9 @@ import com.example.amilosevic.guessthecountry.R
 import com.example.amilosevic.guessthecountry.model.ResultDetails
 import kotlinx.android.synthetic.main.see_results_rv_item.view.*
 
-class ResultsRecyclerAdapter(private var resultDetailsDetails: MutableList<ResultDetails>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val list: ArrayList<String> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ResultsViewHolder (
@@ -20,17 +22,17 @@ class ResultsRecyclerAdapter(private var resultDetailsDetails: MutableList<Resul
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is ResultsViewHolder -> {
-                holder.bind(resultDetailsDetails[position])
+                holder.bind(list[position])
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return resultDetailsDetails.size
+        return list.size
     }
 
-    fun getResultAt(position: Int) : ResultDetails {
-        return resultDetailsDetails[position]
+    fun getResultAt(position: Int) : String {
+        return list[position]
     }
 
     inner class ResultsViewHolder constructor(
@@ -41,13 +43,8 @@ class ResultsRecyclerAdapter(private var resultDetailsDetails: MutableList<Resul
         val score = itemView.tv_score
         val date = itemView.tv_date
 
-       fun bind(resultDetails: ResultDetails) {
-           score.text = "Score: " + resultDetails.score.toString() + "/5"
-           date.text = resultDetails.date.toString()
+       fun bind(resultDetails: String) {
 
-           Glide.with(itemView.context)
-               .load(resultDetails.imageURL)
-               .into(imgView)
        }
 
         override fun onClick(v: View?) {
