@@ -17,7 +17,8 @@
         <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.SeeResultsActivity"></activity>
         <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.PlayQuizActivity" />
         <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.PlayOrSeeResultsActivity" />
-        <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.LoginActivity">
+        <activity android:name="com.example.amilosevic.guessthecountry.ui.activities.LoginActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
