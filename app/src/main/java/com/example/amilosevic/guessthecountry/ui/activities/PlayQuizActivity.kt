@@ -1,10 +1,13 @@
 package com.example.amilosevic.guessthecountry.ui.activities
 
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
+import com.example.amilosevic.guessthecountry.R
 import com.example.amilosevic.guessthecountry.databinding.ActivityPlayQuizBinding
 import com.example.amilosevic.guessthecountry.ui.viewmodels.PlayQuizViewModel
 import com.example.amilosevic.guessthecountry.ui.viewmodels.SeeResultsViewModel
@@ -19,6 +22,11 @@ class PlayQuizActivity : AppCompatActivity() {
     private val playQuizViewModel by viewModel<PlayQuizViewModel>()
     private val seeResultsViewModel by viewModel<SeeResultsViewModel>()
     private lateinit var binding: ActivityPlayQuizBinding
+
+    private lateinit var mSoundPool: SoundPool
+    private var mLoaded: Boolean = false
+    var mSoundMap: HashMap<Int, Int> = HashMap()
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,15 +94,35 @@ class PlayQuizActivity : AppCompatActivity() {
             finish()
         })
 
+        loadSounds()
+
         playQuizViewModel.isAnswerCorrect.observe(this, {
             if(it){
-                //TODO neki zvuk kad je tocan odgovor
+                playSound(R.raw.correct)
             }
             else {
-                //TODO neki zvuk kad odgovor nije tocan
+                playSound(R.raw.wrong)
             }
         })
 
         setContentView(binding.root)
     }
+
+    private fun loadSounds() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.mSoundPool = SoundPool.Builder().setMaxStreams(10).build()
+        }
+        else {
+            this.mSoundPool = SoundPool(10, AudioManager.STREAM_MUSIC, 0)
+        }
+        this.mSoundPool.setOnLoadCompleteListener { _, _, _ -> mLoaded = true }
+        this.mSoundMap[R.raw.correct] = this.mSoundPool.load(this, R.raw.correct, 1)
+        this.mSoundMap[R.raw.wrong] = this.mSoundPool.load(this, R.raw.wrong, 1)
+    }
+
+    private fun playSound(selectedSound: Int) {
+        val soundID = this.mSoundMap[selectedSound] ?: 0
+        this.mSoundPool.play(soundID, 1f, 1f, 1, 0, 1f)
+    }
+
 }

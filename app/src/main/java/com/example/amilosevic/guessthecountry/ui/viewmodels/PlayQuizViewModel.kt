@@ -57,10 +57,8 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
 
     fun isCorrect(answer: String) {
 
-        if(currentQuestion == 4) {
-            allQuestionsAnswered.postValue(true);
-        }
-        else if(answer == selectedCountryImage) {
+
+        if(answer == selectedCountryImage) {
             correctAnswers++
 
             currentQuestion++
@@ -73,6 +71,10 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
             currentQuestionFlag.postValue(currentQuestion)
 
             isAnswerCorrect.postValue(false)
+        }
+
+        if(currentQuestion == 5) {
+            allQuestionsAnswered.postValue(true);
         }
 
         Log.d("currentImageName", selectedCountryImage)
