@@ -1,8 +1,11 @@
 package com.example.amilosevic.guessthecountry.ui.recyclerview
 
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.amilosevic.guessthecountry.R
@@ -11,7 +14,7 @@ import kotlinx.android.synthetic.main.see_results_rv_item.view.*
 
 class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val list: ArrayList<String> = ArrayList()
+    private val list: ArrayList<ResultDetails> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ResultsViewHolder (
@@ -27,11 +30,20 @@ class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : Recycl
         }
     }
 
+    fun addResults(results: ArrayList<ResultDetails>) {
+        if(list.isNotEmpty())
+            list.clear()
+        else {
+            list.addAll(results)
+            notifyDataSetChanged()
+        }
+    }
+
     override fun getItemCount(): Int {
         return list.size
     }
 
-    fun getResultAt(position: Int) : String {
+    fun getItemAt(position: Int): ResultDetails {
         return list[position]
     }
 
@@ -42,9 +54,17 @@ class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : Recycl
         val imgView = itemView.iv_user_image
         val score = itemView.tv_score
         val date = itemView.tv_date
+        val username = itemView.tv_username
 
-       fun bind(resultDetails: String) {
+       fun bind(resultDetails: ResultDetails) {
+           Log.d("bindingStarted", "jea")
+           Glide.with(imgView.context)
+               .load(resultDetails.imageUrl)
+               .into(imgView)
 
+           score.text = "Score: " + resultDetails.score + "/5"
+           date.text = resultDetails.date
+           username.text = "Username: " + resultDetails.username
        }
 
         override fun onClick(v: View?) {

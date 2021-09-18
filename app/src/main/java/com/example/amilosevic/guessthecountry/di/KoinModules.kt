@@ -14,13 +14,9 @@ import com.google.firebase.storage.FirebaseStorage
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val appModule = module {
-    factory { ResultDetails() }
-}
-
 val viewModelModule = module {
     viewModel { RegistrationViewModel(FirebaseService(FirebaseAuth.getInstance())) }
     viewModel { PlayOrSeeResultsViewModel(CloudStorage(FirebaseStorage.getInstance())) }
     viewModel { PlayQuizViewModel(GuessTheCountryRepository()) }
-    viewModel { SeeResultsViewModel(FirebaseFirestore.getInstance(), CloudStorage(FirebaseStorage.getInstance())) }
+    viewModel { SeeResultsViewModel(FirebaseFirestore.getInstance(), CloudStorage(FirebaseStorage.getInstance()), FirebaseAuth.getInstance()) }
 }

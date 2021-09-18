@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.amilosevic.guessthecountry.data.repos.CountriesInfo
+import com.example.amilosevic.guessthecountry.model.CountriesInfo
 import com.example.amilosevic.guessthecountry.data.repos.GuessTheCountryRepository
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -72,4 +72,7 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
         Log.d("isAnswerCorrect", correctAnswers.toString())
     }
 
+    fun getCorrectAnsweres() : Int {
+        return correctAnswers
+    }
 }

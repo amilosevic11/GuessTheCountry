@@ -1,19 +1,27 @@
 package com.example.amilosevic.guessthecountry.ui.activities
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.example.amilosevic.guessthecountry.databinding.ActivityPlayQuizBinding
 import com.example.amilosevic.guessthecountry.ui.viewmodels.PlayQuizViewModel
+import com.example.amilosevic.guessthecountry.ui.viewmodels.SeeResultsViewModel
 import com.example.amilosevic.guessthecountry.utils.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayQuizActivity : AppCompatActivity() {
 
     private val playQuizViewModel by viewModel<PlayQuizViewModel>()
+    private val seeResultsViewModel by viewModel<SeeResultsViewModel>()
     private lateinit var binding: ActivityPlayQuizBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayQuizBinding.inflate(layoutInflater).also {
@@ -70,6 +78,12 @@ class PlayQuizActivity : AppCompatActivity() {
         })
 
         playQuizViewModel.allQuestionsAnswered.observe(this, {
+            CoroutineScope(Dispatchers.Default).launch {
+                seeResultsViewModel.addToDatabase(playQuizViewModel.getCorrectAnsweres().toString())
+            }
+        })
+
+        seeResultsViewModel.didUploadResult.observe(this, {
             finish()
         })
 
