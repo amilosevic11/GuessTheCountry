@@ -1,11 +1,13 @@
-package com.example.amilosevic.guessthecountry.activities
+package com.example.amilosevic.guessthecountry.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.amilosevic.guessthecountry.dialog.RegisterDialog
+import androidx.lifecycle.Observer
+import com.example.amilosevic.guessthecountry.ui.dialog.RegisterDialog
 import com.example.amilosevic.guessthecountry.databinding.ActivityLoginBinding
-import com.example.amilosevic.guessthecountry.viewmodel.RegistrationViewModel
+import com.example.amilosevic.guessthecountry.ui.viewmodels.RegistrationViewModel
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -21,10 +23,9 @@ class LoginActivity : AppCompatActivity() {
             val etPassword = it.etPassword
 
             it.btnLogin.setOnClickListener {
-//                viewModel.login(etEmail.toString(), etPassword.toString())
-
-                val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
-                startActivity(intent)
+                CoroutineScope(Dispatchers.Default).launch {
+                    viewModel.login(etEmail.text.toString(), etPassword.text.toString())
+                }
             }
 
             it.btnRegister.setOnClickListener {
@@ -32,5 +33,20 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         setContentView(binding.root)
+        viewModel.isSignedIn.observe(this, {
+            if (it) {
+                val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
+                startActivity(intent)
+            }
+        })
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(viewModel.isSigned()) {
+            val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

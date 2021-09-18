@@ -1,23 +1,34 @@
-package com.example.amilosevic.guessthecountry.viewmodel
+package com.example.amilosevic.guessthecountry.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.amilosevic.guessthecountry.data.User
 import com.example.amilosevic.guessthecountry.data.firebase.FirebaseService
 import com.google.firebase.auth.FirebaseUser
 
-class RegistrationViewModel(val auth: FirebaseService): ViewModel() {
+class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
 
     var currentUser = MutableLiveData<FirebaseUser>()
     var isSignedIn = MutableLiveData<Boolean>()
+    var isRegistered = MutableLiveData<Boolean>()
 
     suspend fun register(email: String, password: String) {
+
         auth.register(email, password)
+        if(auth.isRegistered())
+            isRegistered.postValue(true)
     }
 
     suspend fun login(email: String, password: String) {
+
         auth.login(email, password)
-        currentUser.postValue(getCurrentUser()!!)
+        if(auth.isSigned()) {
+            currentUser.postValue(auth.getCurrentUser())
+            isSignedIn.postValue(isSigned())
+        }
+    }
+
+    fun signOut() {
+        auth.signOut()
     }
 
     fun isSigned(): Boolean {
@@ -30,5 +41,9 @@ class RegistrationViewModel(val auth: FirebaseService): ViewModel() {
 
     fun getCurrentUser(): FirebaseUser? {
         return auth.getCurrentUser()
+    }
+
+    fun getCurrentUserId(): String? {
+        return auth.getCurrentUser()?.uid
     }
 }
