@@ -1,6 +1,5 @@
 package com.example.amilosevic.guessthecountry.ui.activities
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -79,12 +78,21 @@ class PlayQuizActivity : AppCompatActivity() {
 
         playQuizViewModel.allQuestionsAnswered.observe(this, {
             CoroutineScope(Dispatchers.Default).launch {
-                seeResultsViewModel.addToDatabase(playQuizViewModel.getCorrectAnsweres().toString())
+                seeResultsViewModel.addToDatabase(playQuizViewModel.getCorrectAnswers().toString())
             }
         })
 
         seeResultsViewModel.didUploadResult.observe(this, {
             finish()
+        })
+
+        playQuizViewModel.isAnswerCorrect.observe(this, {
+            if(it){
+                //TODO neki zvuk kad je tocan odgovor
+            }
+            else {
+                //TODO neki zvuk kad odgovor nije tocan
+            }
         })
 
         setContentView(binding.root)

@@ -16,6 +16,8 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
     private var correctAnswers: Int = 0
     var allQuestionsAnswered : MutableLiveData<Boolean> = MutableLiveData()
     var currentQuestionFlag : MutableLiveData<Int> = MutableLiveData()
+    var isAnswerCorrect: MutableLiveData<Boolean> = MutableLiveData()
+
     var currentQuestion: Int = 0
 
     var currentImageName: String = ""
@@ -30,7 +32,7 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
     }
 
     fun getRandomCountryName() : String {
-        if(selectedCountries.size == 3)
+        if(selectedCountries.size == 4)
             selectedCountries.clear()
 
         val randomNumber = Random.nextInt(countriesInfo.size)
@@ -48,6 +50,8 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
         selectedCountryImage = selectedCountries[rnd].name
         currentImageName = selectedCountries[rnd].alpha2Code
 
+        Log.d("rndnbmb", rnd.toString() + " selectedCntrs: " + selectedCountries.size)
+
         return currentImageName
     }
 
@@ -61,10 +65,14 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
 
             currentQuestion++
             currentQuestionFlag.postValue(currentQuestion)
+
+            isAnswerCorrect.postValue(true)
         }
         else {
             currentQuestion++
             currentQuestionFlag.postValue(currentQuestion)
+
+            isAnswerCorrect.postValue(false)
         }
 
         Log.d("currentImageName", selectedCountryImage)
@@ -72,7 +80,7 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
         Log.d("isAnswerCorrect", correctAnswers.toString())
     }
 
-    fun getCorrectAnsweres() : Int {
+    fun getCorrectAnswers() : Int {
         return correctAnswers
     }
 }
