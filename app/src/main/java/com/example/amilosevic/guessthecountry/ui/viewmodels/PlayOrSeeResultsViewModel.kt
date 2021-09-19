@@ -6,7 +6,9 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.amilosevic.guessthecountry.data.firebase.CloudStorage
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
 class PlayOrSeeResultsViewModel(private val storage: CloudStorage) : ViewModel() {
@@ -31,5 +33,10 @@ class PlayOrSeeResultsViewModel(private val storage: CloudStorage) : ViewModel()
 
     suspend fun downloadPhoto() {
         imageUri.postValue(storage.downloadPhoto())
+    }
+
+    fun getStorageRef() {
+        val storageRef = storage.getStorageRef()
+
     }
 }

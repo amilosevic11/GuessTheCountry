@@ -16,7 +16,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { RegistrationViewModel(FirebaseService(FirebaseAuth.getInstance())) }
-    viewModel { PlayOrSeeResultsViewModel(CloudStorage(FirebaseStorage.getInstance())) }
+    viewModel { PlayOrSeeResultsViewModel(CloudStorage(FirebaseStorage.getInstance(), FirebaseAuth.getInstance())) }
     viewModel { PlayQuizViewModel(GuessTheCountryRepository()) }
-    viewModel { SeeResultsViewModel(FirebaseFirestore.getInstance(), CloudStorage(FirebaseStorage.getInstance()), FirebaseAuth.getInstance()) }
+    viewModel { SeeResultsViewModel(FirebaseFirestore.getInstance(), CloudStorage(FirebaseStorage.getInstance(), FirebaseAuth.getInstance()), FirebaseAuth.getInstance()) }
 }

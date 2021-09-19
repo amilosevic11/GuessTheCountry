@@ -39,9 +39,11 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
         }
 
         playOrSeeResultsViewModel.imageUri.observe(this, {
-            Glide.with(this)
-                .load(it)
-                .into(binding.ivUserPhoto)
+            if(it != null) {
+                Glide.with(this)
+                    .load(it.toString())
+                    .into(binding.ivUserPhoto)
+            }
         })
 
         binding.btnSignOut.setOnClickListener {
@@ -81,6 +83,7 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
         if(requestCode == LoadImageDialog.CAMERA_CODE && resultCode == Activity.RESULT_OK) {
             val takenImage = data?.extras?.get("data") as Bitmap
             val imageUri : Uri = playOrSeeResultsViewModel.getImageUri(context = this, takenImage)
+
             CoroutineScope(Dispatchers.Default).launch {
                 playOrSeeResultsViewModel.uploadImage(imageUri)
             }
