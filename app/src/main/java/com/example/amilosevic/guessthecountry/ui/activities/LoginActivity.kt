@@ -3,6 +3,7 @@ package com.example.amilosevic.guessthecountry.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.amilosevic.guessthecountry.ui.dialog.RegisterDialog
 import com.example.amilosevic.guessthecountry.databinding.ActivityLoginBinding
@@ -37,6 +38,9 @@ class LoginActivity : AppCompatActivity() {
             if (it) {
                 val intent = Intent(this, PlayOrSeeResultsActivity::class.java)
                 startActivity(intent)
+            }
+            else {
+                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT)
             }
         })
     }

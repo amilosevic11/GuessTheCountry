@@ -1,5 +1,6 @@
 package com.example.amilosevic.guessthecountry.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.amilosevic.guessthecountry.data.firebase.FirebaseService
@@ -12,18 +13,26 @@ class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
     var isRegistered = MutableLiveData<Boolean>()
 
     suspend fun register(email: String, password: String) {
-
-        auth.register(email, password)
-        if(auth.isRegistered())
-            isRegistered.postValue(true)
+        try {
+            auth.register(email, password)
+            if(auth.isRegistered())
+                isRegistered.postValue(true)
+        }
+        catch (e: Exception) {
+            Log.e("RegistrationException", e.printStackTrace().toString())
+        }
     }
 
     suspend fun login(email: String, password: String) {
-
-        auth.login(email, password)
-        if(auth.isSigned()) {
-            currentUser.postValue(auth.getCurrentUser())
-            isSignedIn.postValue(isSigned())
+        try {
+            auth.login(email, password)
+            if(auth.isSigned()) {
+                currentUser.postValue(auth.getCurrentUser())
+                isSignedIn.postValue(isSigned())
+            }
+        }
+        catch (e: Exception) {
+            Log.e("LoginException", e.printStackTrace().toString())
         }
     }
 
