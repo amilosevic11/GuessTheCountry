@@ -49,7 +49,6 @@ class CloudStorage(storageReference: FirebaseStorage, auth: FirebaseAuth) {
                         Log.e("DownloadError", it.toString())
                     }.await()
                 }
-                return downloadUri
             }
         } catch (e: Exception) {
             Log.e("Downloading photo", e.toString())
