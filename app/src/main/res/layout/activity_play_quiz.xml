@@ -26,8 +26,8 @@
 
     <Button
         android:id="@+id/btn_first_answer"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_second_answer"
         app:layout_constraintBottom_toTopOf="@id/btn_third_answer"
@@ -38,8 +38,8 @@
 
     <Button
         android:id="@+id/btn_second_answer"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/btn_first_answer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_flag"
@@ -50,8 +50,8 @@
 
     <Button
         android:id="@+id/btn_third_answer"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_fourth_answer"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,8 +62,8 @@
 
     <Button
         android:id="@+id/btn_fourth_answer"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/btn_third_answer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_second_answer"

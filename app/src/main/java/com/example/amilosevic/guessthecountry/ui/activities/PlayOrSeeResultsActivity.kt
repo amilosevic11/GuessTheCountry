@@ -68,10 +68,13 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
 
         playOrSeeResultsViewModel.takenImage.observe(this, {
             if (it != null ) {
-                binding.ivUserPhoto.setImageBitmap(it)
-                CoroutineScope(Dispatchers.Default).launch {
-                    playOrSeeResultsViewModel.downloadPhoto()
-                }
+//                binding.ivUserPhoto.setImageBitmap(it)
+                Glide.with(this)
+                    .load(it)
+                    .into(binding.ivUserPhoto)
+//                CoroutineScope(Dispatchers.Default).launch {
+//                    playOrSeeResultsViewModel.downloadPhoto()
+//                }
             }
             else {
                 Log.e("Login not successful", "testtest")

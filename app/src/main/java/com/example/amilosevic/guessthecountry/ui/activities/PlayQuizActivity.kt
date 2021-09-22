@@ -69,7 +69,7 @@ class PlayQuizActivity : AppCompatActivity() {
             binding.btnFourthAnswer.text = playQuizViewModel.getRandomCountryName()
 
             Glide.with(this)
-                .load("https://restcountries.com/data/png/ago.png")
+                .load(playQuizViewModel.getRandomCountryImage())
                 .into(binding.ivFlag)
         })
 
