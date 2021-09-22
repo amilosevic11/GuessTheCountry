@@ -34,7 +34,7 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
 
 //        binding.tvUsername.text = "Hello " + (viewModel.getCurrentUser()?.email ?: "null")
 
-        binding.tvUsername.text = """Hello ${viewModel.getUsername() ?: "null"}"""
+        binding.tvUsername.text = """Hello ${viewModel.getUsername()  ?: "null"}"""
 
         CoroutineScope(Dispatchers.Default).launch {
             playOrSeeResultsViewModel.downloadPhoto()

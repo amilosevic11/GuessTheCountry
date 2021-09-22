@@ -10,7 +10,7 @@ import com.example.amilosevic.guessthecountry.R
 import com.example.amilosevic.guessthecountry.model.ResultDetails
 import kotlinx.android.synthetic.main.see_results_rv_item.view.*
 
-class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ResultsRecyclerAdapter(private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val list: ArrayList<ResultDetails> = ArrayList()
 
@@ -24,6 +24,7 @@ class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : Recycl
         when(holder) {
             is ResultsViewHolder -> {
                 holder.bind(list[position])
+                holder.itemView.setOnClickListener { onItemClickListener.onItemClick(position) }
             }
         }
     }
@@ -31,10 +32,9 @@ class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : Recycl
     fun addResults(results: ArrayList<ResultDetails>) {
         if(list.isNotEmpty())
             list.clear()
-        else {
-            list.addAll(results)
-            notifyDataSetChanged()
-        }
+
+        list.addAll(results)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
@@ -49,10 +49,10 @@ class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : Recycl
         itemView: View
     ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        val imgView = itemView.iv_user_image
-        val score = itemView.tv_score
-        val date = itemView.tv_date
-        val username = itemView.tv_username
+        private val imgView = itemView.iv_user_image
+        private val score = itemView.tv_score
+        private val date = itemView.tv_date
+        private val username = itemView.tv_username
 
        fun bind(resultDetails: ResultDetails) {
            Log.d("bindingStarted", "jea")
@@ -68,7 +68,7 @@ class ResultsRecyclerAdapter(private val listener: OnItemClickListener) : Recycl
         override fun onClick(v: View?) {
             val position = adapterPosition
             if(position != RecyclerView.NO_POSITION)
-                listener.onItemClick(position)
+                onItemClickListener.onItemClick(position)
         }
     }
 
