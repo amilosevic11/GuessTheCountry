@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.amilosevic.guessthecountry.databinding.ActivitySeeResultsBinding
-import com.example.amilosevic.guessthecountry.ui.recyclerview.ResultsRecyclerAdapter
+import com.example.amilosevic.guessthecountry.ui.adapter.ResultsRecyclerAdapter
 import com.example.amilosevic.guessthecountry.ui.viewmodels.SeeResultsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

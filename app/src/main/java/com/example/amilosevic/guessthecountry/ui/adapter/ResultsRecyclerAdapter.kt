@@ -1,11 +1,9 @@
-package com.example.amilosevic.guessthecountry.ui.recyclerview
+package com.example.amilosevic.guessthecountry.ui.adapter
 
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.amilosevic.guessthecountry.R
