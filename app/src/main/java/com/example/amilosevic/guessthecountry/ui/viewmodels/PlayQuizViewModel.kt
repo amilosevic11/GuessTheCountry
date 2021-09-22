@@ -4,15 +4,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.amilosevic.guessthecountry.model.CountriesInfo
 import com.example.amilosevic.guessthecountry.data.repos.GuessTheCountryRepository
+import com.example.amilosevic.guessthecountry.model.RestCountriesResponse
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : ViewModel() {
 
     var didFetchCountries : MutableLiveData<Boolean> = MutableLiveData()
-    private lateinit var countriesInfo : ArrayList<CountriesInfo>
+    private var countriesInfo : ArrayList<RestCountriesResponse> = ArrayList()
     private var correctAnswers: Int = 0
     var allQuestionsAnswered : MutableLiveData<Boolean> = MutableLiveData()
     var currentQuestionFlag : MutableLiveData<Int> = MutableLiveData()
@@ -20,14 +20,15 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
 
     var currentQuestion: Int = 0
 
-    var currentImageName: String = ""
-    var selectedCountries: ArrayList<CountriesInfo> = ArrayList()
+    private var currentImageName: String = ""
+    var selectedCountries: ArrayList<RestCountriesResponse> = ArrayList()
     var selectedCountryImage: String = ""
 
     fun getAllCountries() {
         viewModelScope.launch {
             countriesInfo = repository.getAllCountries()
-            didFetchCountries.postValue(true)
+            if(countriesInfo.isNotEmpty())
+                didFetchCountries.postValue(true)
         }
     }
 
@@ -42,13 +43,13 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
 
         selectedCountries.add(randomCountry)
 
-        return randomCountry.name
+        return randomCountry.name.common
     }
 
     fun getRandomCountryImage(): String {
         val rnd = Random.nextInt(selectedCountries.size)
-        selectedCountryImage = selectedCountries[rnd].name
-        currentImageName = selectedCountries[rnd].alpha2Code
+        selectedCountryImage = selectedCountries[rnd].name.common
+        currentImageName = selectedCountries[rnd].flags[1]
 
         Log.d("rndnbmb", rnd.toString() + " selectedCntrs: " + selectedCountries.size)
 
@@ -56,7 +57,6 @@ class PlayQuizViewModel(private val repository: GuessTheCountryRepository) : Vie
     }
 
     fun isCorrect(answer: String) {
-
 
         if(answer == selectedCountryImage) {
             correctAnswers++

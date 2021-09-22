@@ -1,5 +1,6 @@
 package com.example.amilosevic.guessthecountry.data.api
 
+import android.util.Log
 import com.example.amilosevic.guessthecountry.utils.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
