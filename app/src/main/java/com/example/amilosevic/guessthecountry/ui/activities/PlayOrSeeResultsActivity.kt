@@ -32,7 +32,9 @@ class PlayOrSeeResultsActivity : AppCompatActivity() {
         binding = ActivityPlayOrSeeResultsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvUsername.text = "Hello " + (viewModel.getCurrentUser()?.email ?: "null")
+//        binding.tvUsername.text = "Hello " + (viewModel.getCurrentUser()?.email ?: "null")
+
+        binding.tvUsername.text = """Hello ${viewModel.getUsername() ?: "null"}"""
 
         CoroutineScope(Dispatchers.Default).launch {
             playOrSeeResultsViewModel.downloadPhoto()

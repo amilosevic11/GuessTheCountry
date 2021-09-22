@@ -11,30 +11,43 @@ class FirebaseService(private val auth: FirebaseAuth) {
     var isUserSigned: MutableLiveData<Boolean> = MutableLiveData(false)
     private var isUserRegistered: Boolean = false
 
+    private var index: Int? = auth.currentUser?.email?.indexOf('@')
+    private var username: String? = index?.let { auth.currentUser?.email?.substring(0, it) }
 
     suspend fun register(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            if(it.isSuccessful) {
-                isUserRegistered = true
-                Log.d("REGISTRATION -->", "SUCCESSFUL")
-            }
-            else {
-                Log.d("LOGIN -->", "NOT Successful")
-            }
-        }.addOnFailureListener {
-            Log.e("Registration error --->", it.toString())
-        }.await()
+        try {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                if(it.isSuccessful) {
+                    isUserRegistered = true
+                    Log.d("REGISTRATION -->", "SUCCESSFUL")
+                }
+                else {
+                    Log.d("LOGIN -->", "NOT Successful")
+                }
+            }.addOnFailureListener {
+                isUserRegistered = false
+                Log.e("Registration error --->", it.toString())
+            }.await()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     suspend fun login(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            if(it.isSuccessful) {
-                isUserSigned.postValue(true)
-                Log.e("Login success --->", it.toString())
-            }
-        }.addOnFailureListener {
-            Log.e("Login error --->", it.toString())
-        }.await()
+        try {
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                if(it.isSuccessful) {
+                    isUserSigned.postValue(true)
+                    Log.e("Login success --->", it.toString())
+                }
+            }.addOnFailureListener {
+                Log.e("Login error --->", it.toString())
+            }.await()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun signOut() {
@@ -52,5 +65,9 @@ class FirebaseService(private val auth: FirebaseAuth) {
 
     fun getCurrentUser(): FirebaseUser? {
         return auth.currentUser
+    }
+
+    fun getUsername(): String? {
+        return username
     }
 }

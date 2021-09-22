@@ -17,6 +17,8 @@ class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
             auth.register(email, password)
             if(auth.isRegistered())
                 isRegistered.postValue(true)
+            else
+                isRegistered.postValue(false)
         }
         catch (e: Exception) {
             Log.e("RegistrationException", e.printStackTrace().toString())
@@ -28,6 +30,9 @@ class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
             auth.login(email, password)
             if(auth.isSigned()) {
                 currentUser.postValue(auth.getCurrentUser())
+                isSignedIn.postValue(isSigned())
+            }
+            else {
                 isSignedIn.postValue(isSigned())
             }
         }
@@ -54,5 +59,9 @@ class RegistrationViewModel(private val auth: FirebaseService): ViewModel() {
 
     fun getCurrentUserId(): String? {
         return auth.getCurrentUser()?.uid
+    }
+
+    fun getUsername(): String? {
+        return auth.getUsername()
     }
 }
